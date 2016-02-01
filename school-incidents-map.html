@@ -14,13 +14,6 @@
 <body>
 <div id='map'></div>
 
-// Set the display of this container to none so we can add it programmatically to `legendControl`
-    <div id='legend' style='display:none;'>
-      <strong>K-12 incidents since 1902</strong>
-      <nav class='legend clearfix'>
-        <small>Data Source: <a href="https://schooldangers.org" target="new">School Dangers Org</a></small>
-    </div>
-
 <script>
 //TODO - Remove SDO accessToken & fail gracefully with message to add your own accessToken
 L.mapbox.accessToken = 'pk.eyJ1Ijoic2Nob29sZGFuZ2VycyIsImEiOiIwNWU5NzdkZGFlZTA5MDJmYTY4YmY2Y2M1YmM0YmY0MiJ9.9elPgUKkVhC9S5MmISaxhg';
@@ -39,7 +32,7 @@ var incidents = L.mapbox.featureLayer()
 
 // Customize Attribution Credit for SchoolDangers school incident data and Mapbox / Open Streets map data
 var credits = L.control.attribution().addTo(map);
-credits.addAttribution("<a href='https://www.schooldangers.org/copyright' target='_blank'>School Incidents Data &copy; SchoolDangers</a></br><a href='https://www.mapbox.com/about/maps/' target='_blank'>Maps &copy; Mapbox &copy; OpenStreetMap</a>");
+credits.addAttribution("<a rel="license" href='https://www.schooldangers.org/copyright' target='_blank'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png' /><br/>School Incidents Data &copy; SchoolDangers</a></br></br><a href='https://www.mapbox.com/about/maps/' target='_blank'>Maps &copy; Mapbox &copy; OpenStreetMap</a>");
 credits.setPrefix('');
 
 // Since this layer is loaded with the asynchronous method loadURL, that uses
