@@ -7,27 +7,41 @@
 <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
 <style>
-  body { margin:0; padding:0; }
-  #map { position:absolute; top:0; bottom:0; width:100%; }
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
 </style>
 </head>
 <body>
 <div id='map'></div>
+
+// Set the display of this container to none so we can add it programmatically to `legendControl`
+    <div id='legend' style='display:none;'>
+      <strong>K-12 incidents since 1902</strong>
+      <nav class='legend clearfix'>
+        <small>Data Source: <a href="https://schooldangers.org" target="new">School Dangers Org</a></small>
+    </div>
+
 <script>
 //TODO - Remove SDO accessToken & fail gracefully with message to add your own accessToken
 L.mapbox.accessToken = 'pk.eyJ1Ijoic2Nob29sZGFuZ2VycyIsImEiOiIwNWU5NzdkZGFlZTA5MDJmYTY4YmY2Y2M1YmM0YmY0MiJ9.9elPgUKkVhC9S5MmISaxhg';
-var map = L.mapbox.map('map', 'mapbox.streets')
+var map = L.mapbox.map('map', 'mapbox.streets', {attributionControl: false})
     .setView([39.828175, -98.579500], 5); // Sets backup map center if fitBounds fails
 
+// Render School Incidents Markers
 // As with any other AJAX request, this technique is subject to the Same Origin Policy:
 // http://en.wikipedia.org/wiki/Same_origin_policy
 // So the geoJSON file must be on the same domain as the Javascript, or the server
 // delivering it should support CORS.
 var incidents = L.mapbox.featureLayer()
-    // TODO - In the future this url will link to a "live" geoJSON file updated nightly.
+    // TODO - Link to a "live" geoJSON file updated nightly.
     .loadURL('https://raw.githubusercontent.com/SchoolDangersOrg/MapBox/master/beta/data/incidents.geojson')
     .addTo(map);
-    
+
+// Customize Attribution Credit for SchoolDangers school incident data and Mapbox / Open Streets map data
+var credits = L.control.attribution().addTo(map);
+credits.addAttribution("<a href='https://www.schooldangers.org/copyright' target='_blank'>School Incidents Data &copy; SchoolDangers</a></br><a href='https://www.mapbox.com/about/maps/' target='_blank'>Maps &copy; Mapbox &copy; OpenStreetMap</a>");
+credits.setPrefix('');
+
 // Since this layer is loaded with the asynchronous method loadURL, that uses
 // AJAX in the background, we wait for all of the markers to be loaded by
 // waiting for the ready event. If you don't load your markers with an async
