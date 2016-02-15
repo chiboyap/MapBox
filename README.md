@@ -4,6 +4,13 @@ This repository is intended to help developers visualize School Dangers Org's sc
 
 The current version is *BETA*, meaning we have a framework, but it is not *copy-and-paste* ready for primetime.  
 
+## Copyright and License
+----------------------------------------------
+![Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)
+Data, analysis, compiled work, and published work by [School Dangers Organization](https://schooldangers.org/copyright) is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/ "Attribution-NonCommercial-ShareAlike 4.0 International ") by the School Dangers Organization (SDO).  
+
+You are free to copy, distribute, transmit and adapt our data for noncommercial purposes, as long as you credit the School Dangers Organization and its contributors. If you alter or build upon our data, you may distribute the result only under the same license. The full legal code explains your rights and responsibilities.
+
 ## School Dangers Baselayers
 ----------------------------------------------
 School Dangers baselayers (custom styled map backgrounds aka tiles) will be listed here in the future.  For now we are using *mapbox.streets*, but plan to release a less cluttered background map to help viewers focus on schools and school incidents.
