@@ -1,5 +1,4 @@
 # SchoolDangers-MapBox      VERSION:*BETA*
-==============================================
 This repository is intended to help developers visualize School Dangers Org's school incident and school location data using the MapBox.com service.  This work will also be used by School Dangers Org's public website.
 
 The current version is *BETA*, meaning we have a framework, but it is not *copy-and-paste* ready for primetime.  
