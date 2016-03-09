@@ -2,24 +2,41 @@
 <html>
 <head>
 <meta charset=utf-8 />
-<title>Fit map to markers</title>
+<title>School Incidents Since 1902</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
 <style>
     body { margin:0; padding:0; }
     #map { position:absolute; top:0; bottom:0; width:100%; }
+    .legend label,
+    .legend span {
+      display:block;
+      float:left;
+      height:15px;
+      width:20%;
+      text-align:center;
+      font-size:9px;
+      color:#808080;
+      margin-right:0px;
+      margin-bottom:0px;
+      }
+    .map-legends {
+      margin-right: 10px;
+    }
 </style>
 </head>
 <body>
 <div id='map'></div>
-
+// Set the display of this container to none so we can add it programmatically to `legendControl`
+    <div id='legend' style='display:none;'>
+      <strong><a href="https://schooldangers.org" target="new"><img src="https://schooldangers.org/images/edit.png" alt="edit icon"/> Improve School Dangers</a></strong>
+    </div>
 <script>
 //TODO - Remove SDO accessToken & fail gracefully with message to add your own accessToken
 L.mapbox.accessToken = 'pk.eyJ1Ijoic2Nob29sZGFuZ2VycyIsImEiOiIwNWU5NzdkZGFlZTA5MDJmYTY4YmY2Y2M1YmM0YmY0MiJ9.9elPgUKkVhC9S5MmISaxhg';
 var map = L.mapbox.map('map', 'mapbox.streets', {attributionControl: false})
     .setView([39.828175, -98.579500], 5); // Sets backup map center if fitBounds fails
-
 // Render School Incidents Markers
 // As with any other AJAX request, this technique is subject to the Same Origin Policy:
 // http://en.wikipedia.org/wiki/Same_origin_policy
@@ -30,11 +47,25 @@ var incidents = L.mapbox.featureLayer()
     .loadURL('https://raw.githubusercontent.com/SchoolDangersOrg/MapBox/master/beta/data/incidents.geojson')
     .addTo(map);
 
+// Option Show Legend
+//map.legendControl.addLegend(document.getElementById('legend').innerHTML);
+
 // Customize Attribution Credit for SchoolDangers school incident data and Mapbox / Open Streets map data
 var credits = L.control.attribution().addTo(map);
-credits.addAttribution("<a rel='license' href='https://www.schooldangers.org/copyright' target='_blank'>School Incidents Data &copy; SchoolDangers</a></br><a href='https://www.mapbox.com/about/maps/' target='_blank'>Maps &copy; Mapbox &copy; OpenStreetMap</a>");
+credits.addAttribution("Incident Data <a rel='license' href='https://www.schooldangers.org/copyright' target='_blank'>&copy; SchoolDangersOrg</a> <a href='https://www.schooldangers.org' target='_blank'><strong>Improve this data</strong></a></br>Maps <a href='https://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a>");
 credits.setPrefix('');
 
+// Allow User to Toggle Baselayers
+  var layers = {
+      Streets: L.mapbox.tileLayer('mapbox.streets'),
+      Outdoors: L.mapbox.tileLayer('mapbox.outdoors'),
+      Satellite: L.mapbox.tileLayer('mapbox.satellite')
+  };
+
+  layers.Streets.addTo(map);
+  L.control.layers(layers).addTo(map);
+
+// Load Incident Data Asynchronously 
 // Since this layer is loaded with the asynchronous method loadURL, that uses
 // AJAX in the background, we wait for all of the markers to be loaded by
 // waiting for the ready event. If you don't load your markers with an async
